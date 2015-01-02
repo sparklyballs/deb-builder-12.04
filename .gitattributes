@@ -1,0 +1,4 @@
+# Auto detect text files and force unix-style line endings
+		*.deb -text
+               
+
