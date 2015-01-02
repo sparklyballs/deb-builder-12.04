@@ -3,7 +3,7 @@ FROM ubuntu:12.04
 ENV DEBIAN_FRONTEND noninteractive
 # Set correct environment variables
 ENV HOME /root
-mkdir -p /root/debout /root/patches
+RUN mkdir -p /root/debout /root/patches
 
 VOLUME /root/debout
 VOLUME /root/patches
