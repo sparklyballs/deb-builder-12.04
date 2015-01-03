@@ -20,7 +20,7 @@ apt-get install build-essential automake autoconf libtool pkg-config libcurl4-op
 
 RUN apt-get update && \
 
-RUN apt-get install -y wget software-properties-common python-software-properties -y
+apt-get install -y wget software-properties-common python-software-properties -y
 
 # Pull kodi source from git and apply any patches
 # Edit this section for branch, configure enables/disables  and patch etc.....
@@ -29,7 +29,7 @@ RUN apt-get install -y wget software-properties-common python-software-propertie
 RUN add-apt-repository ppa:team-xbmc/ppa && \
 add-apt-repository ppa:team-xbmc/xbmc-ppa-build-depends && \
 apt-get update && \
-apt-get build-dep kodi -y && \
+apt-get build-dep kodi -y
 
 RUN wget http://pkgs.fedoraproject.org/lookaside/pkgs/taglib/taglib-1.8.tar.gz/dcb8bd1b756f2843e18b1fdf3aaeee15/taglib-1.8.tar.gz && \
 tar xzf taglib-1.8.tar.gz && \
@@ -39,7 +39,7 @@ make && \
 make install
 
 # Main git source
-RUN git clone https://github.com/topfs2/xbmc.git
+RUN git clone https://github.com/xbmc/xbmc.git
 
 # mv patch to xbmc folder
 
@@ -48,16 +48,53 @@ mv /root/patches/5071.patch . && \
 
 # checkout branch/tag
 
-git checkout helix_headless && \
+git checkout 14.0-Helix && \
 
 # Apply patch(s)
 
-# git apply 5071.patch && \
+git apply 5071.patch && \
 
 # Configure, make, clean.
 ./bootstrap && \
 ./configure \
+--enable-nfs \
+--enable-upnp \
+--enable-ssh \
+--enable-libbluray \
+--disable-debug \
+--disable-vdpau \
+--disable-vaapi \
+--disable-crystalhd \
+--disable-vdadecoder \
+--disable-vtbdecoder \
+--disable-openmax \
+--disable-joystick \
+--disable-rsxs \
+--disable-projectm \
+--disable-rtmp \
+--disable-airplay \
+--disable-airtunes \
+--disable-dvdcss \
+--disable-optical-drive \
+--disable-libusb \
 --disable-libcec \
+--disable-libmp3lame \
+--disable-libcap \
+--disable-udev \
+--disable-libvorbisenc \
+--disable-asap-codec \
+--disable-afpclient \
+--disable-goom \
+--disable-fishbmc \
+--disable-spectrum \
+--disable-waveform \
+--disable-avahi \
+--disable-non-free \
+--disable-texturepacker \
+--disable-pulse \
+--disable-dbus \
+--disable-alsa \
+--disable-hal \
 --prefix=/opt/kodi-server && \
 make
 
